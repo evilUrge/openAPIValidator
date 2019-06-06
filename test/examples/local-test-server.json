@@ -1,0 +1,145 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Local test server",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/status": {
+      "get": {
+        "tags": [
+          "Diagnostics & Monitoring"
+        ],
+        "summary": "Get server status",
+        "description": "It's used for monitoring",
+        "operationId": "serviceStatus",
+        "responses": {
+          "200": {
+            "description": "Status of the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/status_response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stock/{sku}": {
+      "get": {
+        "tags": [
+          "Stock"
+        ],
+        "summary": "Check stock SKU",
+        "operationId": "getStockSKU",
+        "parameters": [
+          {
+            "name": "sku",
+            "description": "sku to check in stock",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "int"
+            }
+          }
+        ],
+        "example": {
+          "params":{
+            "sku": 3412
+          },
+          "body": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Get stock of a specific SKU",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExampleGetResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error_response"
+          },
+          "404": {
+            "$ref": "#/components/responses/error_response"
+          },
+          "500": {
+            "$ref": "#/components/responses/error_response"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ExampleGetResponse": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "int"
+          }
+        },
+        "example": {
+          "amount": 13
+        }
+      }
+
+    },
+    "responses": {
+      "error_response": {
+        "description": "Error response to be used for all error messages send by the service.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "message"
+              ],
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "example": "000"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "why this code is returned"
+                }
+              }
+            }
+          }
+        }
+      },
+      "status_response": {
+        "description": "Status response used to provide comprehensive information about the state of service.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "timestamp"
+              ],
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "1970-01-01T01:01:01.000Z"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

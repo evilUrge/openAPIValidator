@@ -1,0 +1,321 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "demo service",
+    "description": "Description of the service",
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Technical specification page",
+    "url": "https://myspecsissomewhereinthisworld.com"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:{port}/{basePath}",
+      "description": "Development server (local)",
+      "variables": {
+        "port": {
+          "default": "3000"
+        },
+        "basePath": {
+          "default": "v1"
+        }
+      }
+    },
+    {
+      "url": "http://1.1.1.1:{port}/{basePath}",
+      "description": "Test server",
+      "variables": {
+        "port": {
+          "default": "3000"
+        },
+        "basePath": {
+          "default": "v1"
+        }
+      }
+    },
+    {
+      "url": "http://0.0.0.0/{basePath}",
+      "description": "Production server (internal)",
+      "variables": {
+        "basePath": {
+          "default": "v1"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/status": {
+      "get": {
+        "tags": [
+          "Diagnostics & Monitoring"
+        ],
+        "summary": "Get server status",
+        "description": "It's used for monitoring",
+        "operationId": "serviceStatus",
+        "responses": {
+          "200": {
+            "description": "Status of the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/status_response"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/error_response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/examples": {
+      "get": {
+        "tags": [
+          "Example set of API definitions"
+        ],
+        "summary": "List of examples",
+        "description": "This is just a blank implementation",
+        "operationId": "getExamples",
+        "responses": {
+          "200": {
+            "description": "A complex object array response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/example_object"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/error_response"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Example set of API definitions"
+        ],
+        "summary": "Get server status",
+        "description": "It's used for monitoring",
+        "operationId": "setExample",
+        "requestBody": {
+          "description": "example to add to the system",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/example_object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created example object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/example_object"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/error_response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/examples/{example_id}": {
+      "get": {
+        "tags": [
+          "Example set of API definitions"
+        ],
+        "summary": "Get server status",
+        "description": "It's used for monitoring",
+        "operationId": "getExample",
+        "parameters": [
+          {
+            "name": "example_id",
+            "in": "path",
+            "description": "ID of the example",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sample_query",
+            "in": "query",
+            "description": "random example of query parameter",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status of the server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/example_object"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/error_response"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "example_object": {
+        "type": "object",
+        "required": [
+          "name",
+          "id"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "small_details": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/detail"
+            }
+          },
+          "age": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          }
+        },
+        "example": {
+          "name": "/examples/bable",
+          "id": "bable",
+          "age": 3
+        }
+      },
+      "detail": {
+        "type": "object",
+        "required": [
+          "name",
+          "id"
+        ],
+        "properties": {
+          "something_weird": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "something_weird": "no clue what to put here",
+          "id": "weird logic"
+        }
+      }
+    },
+    "responses": {
+      "error_response": {
+        "description": "Error response to be used for all error messages send by the service.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "message"
+              ],
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "example": "000"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "why this code is returned"
+                }
+              },
+              "example": {
+                "code": "000",
+                "message": "Reason why 000 is returned."
+              }
+            }
+          }
+        }
+      },
+      "status_response": {
+        "description": "Status response used to provide comprehensive information about the state of service.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "timestamp"
+              ],
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "1970-01-01T01:01:01.000Z"
+                }
+              },
+              "example": {
+                "status": false,
+                "timestamp": "1970-01-01T01:01:01.000Z"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "basePath": "v1"
+}
