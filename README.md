@@ -1,5 +1,8 @@
 openAPIValidator - Validate your openapi spec like a _boss_
 -----------------------------------------------------------
+
+<a href="https://codeclimate.com/github/evilUrge/openAPIValidator/maintainability"><img src="https://api.codeclimate.com/v1/badges/562791ecf358c2f97c23/maintainability" /></a>
+
 Microservice that runs set of tests on an exposed openapispecs of a microservice (as part of [OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md)).
 
 ## Prerequisites:
