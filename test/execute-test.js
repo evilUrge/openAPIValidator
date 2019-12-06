@@ -8,8 +8,8 @@ const utils = require('./utils');
 const server = require(`${utils.baseDir}/src/server`);
 
 const constant = require(`${utils.baseDir}/test/consts`);
-const url = '/v1/execute';
-const test_url = {url: `http://127.0.0.1:${constant.settings.port}/api-docs`};
+const url = '/execute';
+const test_url = {url: `http://127.0.0.1:${constant.settings.port}/v1/api-docs`};
 
 const should = chai.should();
 let session = {};
@@ -33,7 +33,6 @@ describe('Validate schema', () => {
             chai.request(server).post(url).send(test_url)
                 .end((err, res)=>{
                     chai.expect(err).to.be.null;
-                    console.log(res.value);
                     res.should.status(200);
                 done();
             });

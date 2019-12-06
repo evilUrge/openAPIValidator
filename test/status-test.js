@@ -22,7 +22,7 @@ describe('Health test', () => {
 
     describe('check /status', () => {
         it('Should return 200', (done) => {
-            chai.request(server).get('/v1/status')
+            chai.request(server).get('/status')
                 .end((err, res)=>{
                     res.should.status(200);
                 done();
